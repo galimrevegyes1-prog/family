@@ -1,0 +1,75 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+}
+.tree-container {
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.generation {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: start;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+.members-pair {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.member-card {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 5px solid transparent; 
+    width: 150px;
+    height: 130px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.card-male {
+    border-top-color: #3498db;
+}
+.card-female {
+    border-top-color: #e74c3c;
+}
+.member-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.member-details {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    line-height: 1.4;
+}
