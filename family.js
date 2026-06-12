@@ -112,6 +112,17 @@ function showCards(generations) {
 
     // elemek közötti vonalak
     const svg = document.getElementById('tree_svg');
+    line(svg,100,10,200,20);
+}
+
+function line(svg,x1,y1,x2,y2){
+    const l = document.createElementNS("http://www.w3.org/2000/svg","line");
+    l.setAttribute("x1",x1);
+    l.setAttribute("y1",y1);
+    l.setAttribute("x2",x2);
+    l.setAttribute("y2",y2);
+    l.setAttribute("class","link");
+    svg.appendChild(l);
 }
 
 function createMemberCard(personId) {
