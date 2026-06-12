@@ -109,6 +109,9 @@ function showCards(generations) {
 
         treeContainer.appendChild(rowDiv);
     });
+
+    // elemek közötti vonalak
+    const svg = document.getElementById('tree_svg');
 }
 
 function createMemberCard(personId) {
