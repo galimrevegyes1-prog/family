@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Családom v1</title>
+    <title>Családfa</title>
     <!-- Külső CSS beágyazása -->
     <link rel="stylesheet" href="family.css">
 </head>
 <body>
 
-    <h1>Családom</h1>
-    <!--svg id="tree_svg"></svg-->
-    <div id="tree_div"></div>
+    <h1>Csaláfa</h1>
     <svg id="tree_svg"></svg>
+    <div id="tree_div"></div>
+
+    <div id="sidePanel">
+        <button class="closeBtn" onclick="closePanel()">&times;</button>
+
+        <h2>Információk</h2>
+        <p>
+            Ez a panel jobbról úszik be, és a képernyő
+            szélességének kb. negyedét foglalja el.
+        </p>
+
+        <p>Tetszőleges HTML tartalom ide kerülhet.</p>
+    </div>
 
     <!-- Külső JavaScript beágyazása -->
     <script src="family.js"></script>

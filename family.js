@@ -1,4 +1,33 @@
 let familyData = [];
+const panel = document.getElementById('sidePanel');
+const treeContainer = document.getElementById('tree_div');
+var openedPanel = false;
+
+function openPanel() {
+    panel.classList.add('open');
+    treeContainer.classList.add('show');
+    openedPanel = true;
+}
+
+function closePanel() {
+    panel.classList.remove('open');
+    treeContainer.classList.remove('show');
+    openedPanel = false;
+}
+
+/* ESC billentyű */
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && openedPanel) {
+        closePanel();
+    }
+});
+
+/* Külső kattintás 
+treeContainer.addEventListener('click', (e) => {
+    if (openedPanel) {
+        closePanel();
+    }
+});*/
 
 // Külső JSON fájl aszinkron beolvasása (Fetch API)
 async function loadFamilyTree() {
@@ -15,7 +44,7 @@ async function loadFamilyTree() {
     }
 }
 
-function getSiblings(levels,person, asc) {
+/*function getSiblings(levels,person, asc) {
     if (!person) return [];
     if (person.parents && person.parents.length > 0) {
         const siblings = familyData.filter(p => 
@@ -29,7 +58,7 @@ function getSiblings(levels,person, asc) {
         }
     }
     return [];
-}
+}*/
 
 function isAdded(levels,personId) {
     return Object.values(levels).some(level => level.includes(personId));
@@ -89,7 +118,6 @@ function buildTree() {
 
 function showCards(generations) {
     // HTML elemek kirajzolása
-    const treeContainer = document.getElementById('tree_div');
     treeContainer.className = 'tree-container';
     treeContainer.innerHTML = '';
 
@@ -112,7 +140,39 @@ function showCards(generations) {
 
     // elemek közötti vonalak
     const svg = document.getElementById('tree_svg');
-    line(svg,100,10,200,20);
+    for(let i = 0; i < generations.length - 1; i++) {
+        const currentGen = generations[i];
+        for(let j = 0; j < currentGen.length; j++) {
+            const pair = currentGen[j];
+            const person = pair[0];
+            const personDiv = document.getElementById(person);
+            const personRect = personDiv.getBoundingClientRect();
+            const personWidth = personRect.width;
+            const personLeft = personRect.left;
+            const pairCenterX = (pair.length === 1) ? (personWidth / 2) : (personLeft + personWidth + 10);
+            let pairCenterY = personRect.bottom;
+            if(pair.length === 2) {
+                line(svg, (personLeft + personWidth / 2), pairCenterY, personLeft + personWidth / 2, pairCenterY + 5); // függőleges vonal egyik szülőtől
+                const parentDiv = document.getElementById(pair[1]);
+                const parentRect = parentDiv.getBoundingClientRect();
+                line(svg, (parentRect.left + parentRect.width / 2), pairCenterY, parentRect.left + parentRect.width / 2, pairCenterY + 5); // függőleges vonal másik szülőtől
+                line(svg, (personLeft + personWidth / 2), pairCenterY + 5, parentRect.left + parentRect.width / 2, pairCenterY + 5); // vízszintes vonal a két függőleges vonal között
+                pairCenterY += 5; // a vízszintes vonal alatti pont
+            }
+            familyData.forEach(child => {
+                if(child.parents && child.parents.includes(person)) {
+                    const childDiv = document.getElementById(child.id);
+                    const childRect = childDiv.getBoundingClientRect();
+                    const vectorY = pairCenterY + ((childRect.top - pairCenterY) / 2) + (j * 8);
+                    line(svg, pairCenterX, pairCenterY, pairCenterX, vectorY); // függőleges vonal szülőktól félútig
+                    const childCenterX = childRect.left + (childRect.width / 2);
+                    const childCenterY = childRect.top;
+                    line(svg, childCenterX, childCenterY, childCenterX, vectorY); // függőleges vonal gyerektől félútig
+                    line(svg, childCenterX, vectorY, pairCenterX, vectorY); // vízszintes vonal a két függőleges vonal között
+                }
+            });
+        }
+    }
 }
 
 function line(svg,x1,y1,x2,y2){
@@ -122,6 +182,9 @@ function line(svg,x1,y1,x2,y2){
     l.setAttribute("x2",x2);
     l.setAttribute("y2",y2);
     l.setAttribute("class","link");
+    l.setAttribute("fill", "#ffdce8");
+    l.setAttribute("stroke-width", 2);
+    l.setAttribute("stroke", "#a16077");
     svg.appendChild(l);
 }
 
@@ -129,7 +192,14 @@ function createMemberCard(personId) {
     const person = familyData.find(p => p.id === personId);
     const card = document.createElement('div');
     card.className = 'member-card';
-    
+    card.id = `${person.id}`;
+    card.addEventListener('click', () => {
+        if(openedPanel) {
+            closePanel();
+        } else {
+            openPanel();
+        }
+    });    
     if (person.gender === 'férfi') {
         card.classList.add('card-male');
     } else if (person.gender === 'nő') {
