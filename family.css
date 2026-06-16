@@ -32,7 +32,7 @@ svg {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: start;
+    justify-content: space-around;
     gap: 20px;
     overflow-x: auto;
     padding: 10px 0;
