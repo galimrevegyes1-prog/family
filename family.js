@@ -44,7 +44,7 @@ async function loadFamilyTree() {
     }
 }
 
-/*function getSiblings(levels,person, asc) {
+function getSiblings(levels,person, asc) {
     if (!person) return [];
     if (person.parents && person.parents.length > 0) {
         const siblings = familyData.filter(p => 
@@ -58,7 +58,7 @@ async function loadFamilyTree() {
         }
     }
     return [];
-}*/
+}
 
 function isAdded(levels,personId) {
     return Object.values(levels).some(level => level.includes(personId));
@@ -78,7 +78,6 @@ function addPersonToLevel(levels, level, person) {
             level = parseInt(parentLevel) + 1;
         }
     }
-
     if(!levels[level]) {
         levels[level] = [];
     }
@@ -94,13 +93,47 @@ function buildTree() {
     const sortedLevels = Object.keys(levels).sort((a, b) => a - b);
     const generations = [];
     sortedLevels.forEach(level => {
-        const sortedGeneration = [];
+        let sortedGeneration = [];
         const generation = levels[level];
         generation.forEach(pid => {
+            const person = familyData.find(p => p.id === pid);
             if(sortedGeneration.some(g => g.includes(pid))) {
+                /*
+                const siblings = generation.filter(sid => {
+                    if(sid === pid) return false;
+                    const sibling = familyData.find(p => p.id === sid);
+                    if(sibling && sibling.parents && sibling.parents.some(parentId => person.parents.includes(parentId))) {
+                        return true;
+                    }
+                    return false;
+                });
+                if(siblings.length > 0){
+                    const siblingPairs = siblings
+                        .filter(sid => !sortedGeneration.some(g => g.includes(sid)))
+                        .map(sid => [sid]);
+                    let pos = null;
+                    sortedGeneration.forEach((pair,i) => {
+                        const id = pair.indexOf(person.id);
+                        if(id >= 0) pos = i;
+                    });
+                    if(person.husband){
+                        const wArr = sortedGeneration.slice(0, pos + 1);
+                        wArr.push(...siblingPairs);
+                        wArr.push(...sortedGeneration.slice(pos + 1));
+                        sortedGeneration = wArr;
+                    } else if(person.wife) {
+                        const wArr = sortedGeneration.slice(0, pos);
+                        wArr.push(...siblingPairs);
+                        wArr.push(...sortedGeneration.slice(pos));
+                        sortedGeneration = wArr;
+                    }
+                }*/
                 return;
             }
-            const person = familyData.find(p => p.id === pid);
+            const siblings = addSiblings(pid,person,generation);
+            if(siblings.length > 0){
+                const found = sortedGeneration.some(g => g.includes(siblings[0]));
+            }
             if(person.husband) {
                 sortedGeneration.push([person.husband, pid]);
             }
@@ -114,6 +147,18 @@ function buildTree() {
     });
 
     showCards(generations);
+}
+
+function addSiblings(pid, person, generation) {
+    const siblings = generation.filter(sid => {
+        if(sid === pid) return false;
+        const sibling = familyData.find(p => p.id === sid);
+        if(sibling && sibling.parents && sibling.parents.some(parentId => person.parents.includes(parentId))) {
+            return true;
+        }
+        return false;
+    });
+    return siblings;
 }
 
 function showCards(generations) {
