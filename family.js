@@ -185,6 +185,9 @@ function showCards(generations) {
 
     // elemek közötti vonalak
     const svg = document.getElementById('tree_svg');
+    const treeRect = treeContainer.getBoundingClientRect();
+    svg.setAttribute('width', treeRect.width);
+    svg.setAttribute('height', treeRect.height);
     for(let i = 0; i < generations.length - 1; i++) {
         const currentGen = generations[i];
         for(let j = 0; j < currentGen.length; j++) {
