@@ -98,46 +98,23 @@ function buildTree() {
         generation.forEach(pid => {
             const person = familyData.find(p => p.id === pid);
             if(sortedGeneration.some(g => g.includes(pid))) {
-                /*
-                const siblings = generation.filter(sid => {
-                    if(sid === pid) return false;
-                    const sibling = familyData.find(p => p.id === sid);
-                    if(sibling && sibling.parents && sibling.parents.some(parentId => person.parents.includes(parentId))) {
-                        return true;
-                    }
-                    return false;
-                });
-                if(siblings.length > 0){
-                    const siblingPairs = siblings
-                        .filter(sid => !sortedGeneration.some(g => g.includes(sid)))
-                        .map(sid => [sid]);
-                    let pos = null;
-                    sortedGeneration.forEach((pair,i) => {
-                        const id = pair.indexOf(person.id);
-                        if(id >= 0) pos = i;
-                    });
-                    if(person.husband){
-                        const wArr = sortedGeneration.slice(0, pos + 1);
-                        wArr.push(...siblingPairs);
-                        wArr.push(...sortedGeneration.slice(pos + 1));
-                        sortedGeneration = wArr;
-                    } else if(person.wife) {
-                        const wArr = sortedGeneration.slice(0, pos);
-                        wArr.push(...siblingPairs);
-                        wArr.push(...sortedGeneration.slice(pos));
-                        sortedGeneration = wArr;
-                    }
-                }*/
                 return;
             }
             const siblings = addSiblings(pid,person,generation);
-            if(siblings.length > 0){
-                const found = sortedGeneration.some(g => g.includes(siblings[0]));
-            }
             if(person.husband) {
                 sortedGeneration.push([person.husband, pid]);
+                siblings.forEach(x => {
+                    if(!sortedGeneration.some(g => g.includes(x))) {
+                        sortedGeneration.push([x]);
+                    }
+                });
             }
             else if(person.wife) {
+                siblings.forEach(x => {
+                    if(!sortedGeneration.some(g => g.includes(x))) {
+                        sortedGeneration.push([x]);
+                    }
+                });
                 sortedGeneration.push([pid, person.wife]);
             } else {
                 sortedGeneration.push([pid]);
