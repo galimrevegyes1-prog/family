@@ -153,7 +153,8 @@
    {
       "id":18,
       "name":"Vései János",
-      "birthdate":"1899",
+      "birthdate":"1899.12.17.",
+      "deathdate":"1985"
       "birthplace":"Szany",
       "parents":[],
       "gender":"férfi",
