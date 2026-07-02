@@ -30,7 +30,7 @@ svg {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     overflow-x: auto;
     padding: 10px 0;
 }

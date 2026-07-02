@@ -2,8 +2,20 @@ let familyData = [];
 const panel = document.getElementById('sidePanel');
 const treeContainer = document.getElementById('tree_div');
 var openedPanel = false;
+var currentPersonId = null;
 
-function openPanel() {
+function openPanel(person) {
+    const titlePanel = document.getElementById('sideTitle');
+    titlePanel.textContent = person.name;
+    const dataPanel = document.getElementById('sideData');
+    dataPanel.textContent = `${person.birthplace} - ${person.birthdate} - ${person.deathdate ?? ''}`;
+    const historyPanel = document.getElementById('sideHistory');
+    if(person.pictures){
+        historyPanel.innerHTML = `${person.pictures?.map(x => '<img width="100%" src="./public/Tamás nagypapa, nagymama.jpeg" />')}`
+    } else {
+        historyPanel.innerHTML = '';
+    }
+
     panel.classList.add('open');
     treeContainer.classList.add('show');
     openedPanel = true;
@@ -21,13 +33,6 @@ document.addEventListener('keydown', (e) => {
         closePanel();
     }
 });
-
-/* Külső kattintás 
-treeContainer.addEventListener('click', (e) => {
-    if (openedPanel) {
-        closePanel();
-    }
-});*/
 
 // Külső JSON fájl aszinkron beolvasása (Fetch API)
 async function loadFamilyTree() {
@@ -221,8 +226,12 @@ function createMemberCard(personId) {
     card.addEventListener('click', () => {
         if(openedPanel) {
             closePanel();
+            if(currentPersonId !== person.id) {
+                openPanel(person);
+                currentPersonId = person.id;
+            }
         } else {
-            openPanel();
+            openPanel(person);
         }
     });    
     if (person.gender === 'férfi') {

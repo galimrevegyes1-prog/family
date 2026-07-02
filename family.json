@@ -85,7 +85,10 @@
       "birthplace":"Böde",
       "parents":[],
       "gender":"férfi",
-      "wife":17
+      "wife":17,
+      "pictures":[
+         "Tamás nagypapa, nagymama.jpeg"
+      ]
    },
    {
       "id":11,
@@ -142,7 +145,10 @@
       "birthplace":"Nagyhajmás",
       "parents":[],
       "gender":"nő",
-      "husband":10
+      "husband":10,
+      "pictures":[
+         "Tamás nagypapa, nagymama.jpeg"
+      ]
    },
    {
       "id":18,
