@@ -45,7 +45,7 @@ async function loadFamilyTree() {
         buildTree();
     } catch (error) {
         console.error('Hiba történt:', error);
-        document.getElementById('tree').innerHTML = `<p style="color:red; text-align:center;">Hiba az adatok betöltése közben: ${error.message}</p>`;
+        document.getElementById('tree_div').innerHTML = `<p style="color:red; text-align:center;">Hiba az adatok betöltése közben: ${error.message}</p>`;
     }
 }
 
