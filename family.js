@@ -10,10 +10,9 @@ function openPanel(person) {
     const dataPanel = document.getElementById('sideData');
     dataPanel.textContent = `${person.birthplace} - ${person.birthdate} - ${person.deathdate ?? ''}`;
     const historyPanel = document.getElementById('sideHistory');
+    historyPanel.innerHTML = '';
     if(person.pictures){
         historyPanel.innerHTML = `${person.pictures?.map(x => `<img width="100%" src="./public/${x}" />`).join('<br />')}`
-    } else {
-        historyPanel.innerHTML = '';
     }
 
     panel.classList.add('open');
