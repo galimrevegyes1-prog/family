@@ -158,7 +158,11 @@
       "birthplace":"Szany",
       "parents":[],
       "gender":"férfi",
-      "wife":19
+      "wife":19,
+      "pictures":[
+         "1947_Vései_család.jpg",
+         "1981_December_25_Szany_Vései_János_Gasztonyi_Mária_és_gyermekeik_Károly_Zsuzsa_György.jpg"
+      ]
    },
    {
       "id":19,
@@ -167,6 +171,10 @@
       "birthplace":"Szany",
       "parents":[],
       "gender":"nő",
-      "husband":18
+      "husband":18,
+      "pictures":[
+         "1947_Vései_család.jpg",
+         "1981_December_25_Szany_Vései_János_Gasztonyi_Mária_és_gyermekeik_Károly_Zsuzsa_György.jpg"
+      ]
    }
 ]
